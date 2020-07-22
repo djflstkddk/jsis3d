@@ -2,6 +2,8 @@ import os
 import sys
 import h5py
 import numpy as np
+import argparse
+import pdb
 
 
 parser = argparse.ArgumentParser()
@@ -15,8 +17,8 @@ np.random.seed(seed)
 fname = os.path.join(root, 'metadata', 'classes.txt')
 classes = [line.strip() for line in open(fname, 'r')]
 
-fname = os.path.join(root, 'metadata', 'all_data.txt')
-flist = [os.path.join(root, 'processed', line.strip())
+fname = os.path.join(root, 'metadata', 'my_data.txt')
+flist = [os.path.join(root, 'npy', line.strip())
          for line in open(fname, 'r')]
 
 
@@ -33,7 +35,10 @@ def sample_cloud(cloud, num_samples):
 
 def room_to_blocks(fname, num_points, size=1.0, stride=0.5, threshold=100):
     cloud = np.load(fname)
-    cloud[:, 3:6] /= 255.0
+    #cloud[:, 3:6] /= 255.0
+    pdb.set_trace()
+    limit_min = np.amin(cloud[:, 0:3], axis = 0)
+    cloud[:, 0:3] = cloud[:, 0:3] - limit_min
     limit = np.amax(cloud[:, 0:3], axis=0)
     width = int(np.ceil((limit[0] - size) / stride)) + 1
     depth = int(np.ceil((limit[1] - size) / stride)) + 1
@@ -67,7 +72,7 @@ def room_to_blocks(fname, num_points, size=1.0, stride=0.5, threshold=100):
         batch[b, :, 11] = blocks[b, :, 2] / limit[2]
     batch[:,:, 0:3] = blocks[:,:,0:3]
     batch[:,:, 5:9] = blocks[:,:,2:6]
-    batch[:,:, 12:] = blocks[:,:,6:8]
+    #batch[:,:, 12:] = blocks[:,:,6:8]
     return batch
 
 
@@ -75,10 +80,10 @@ def save_batch_h5(fname, batch):
     fp = h5py.File(fname)
     coords = batch[:, :, 0:3]
     points = batch[:, :, 3:12]
-    labels = batch[:, :, 12:14]
+    #labels = batch[:, :, 12:14]
     fp.create_dataset('coords', data=coords, compression='gzip', dtype='float32')
     fp.create_dataset('points', data=points, compression='gzip', dtype='float32')
-    fp.create_dataset('labels', data=labels, compression='gzip', dtype='int64')
+    #fp.create_dataset('labels', data=labels, compression='gzip', dtype='int64')
     fp.close()
 
 
@@ -88,8 +93,10 @@ for fname in flist:
         print('[WARNING] Cannot find {}'.format(fname))
         continue
 
+    pdb.set_trace()
+    num_points = 4096
     batch = room_to_blocks(fname, num_points, size=1.0, stride=0.5)
-    fname = os.path.join(root, 'h5', basename + '.h5')
+    fname = os.path.join(root, 'my_h5', basename + '.h5')
     print('> Saving batch to {}...'.format(fname))
     if not os.path.exists(fname):
         save_batch_h5(fname, batch)
