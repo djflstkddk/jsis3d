@@ -92,7 +92,6 @@ for fname in tqdm(flist, ascii=True):
     pred = pdict[offset:offset + batch_size]
     pred = block_merge(points[:, :, 6:9], pred)
     pred = pred.reshape(-1, 2)
-    pdb.set_trace()
 
     if mvcrf:
         coords = coords.reshape(-1, 3)

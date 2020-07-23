@@ -36,7 +36,7 @@ def sample_cloud(cloud, num_samples):
 def room_to_blocks(fname, num_points, size=1.0, stride=0.5, threshold=100):
     cloud = np.load(fname)
     #cloud[:, 3:6] /= 255.0
-    pdb.set_trace()
+    #pdb.set_trace()
     limit_min = np.amin(cloud[:, 0:3], axis = 0)
     cloud[:, 0:3] = cloud[:, 0:3] - limit_min
     limit = np.amax(cloud[:, 0:3], axis=0)
