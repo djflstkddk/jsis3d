@@ -1,6 +1,8 @@
-# JSIS3D
+# Point Cloud Segmentation(real, indoor data)
 
-This is the official Pytorch implementation of the following publication.
+
+* This is a result of direct application on real, indoor data with JSIS3D(CVPR 2019) as a PointNet-based model. 
+* results of another model, as a voxelization & sparse-convolution based model, will be added later.
 
 > **JSIS3D: Joint Semantic-Instance Segmentation of 3D Point Clouds with**<br/>
 > **Multi-Task Pointwise Networks and Multi-Value Conditional Random Fields**<br/>
@@ -8,17 +10,9 @@ This is the official Pytorch implementation of the following publication.
 > Yeung<br/> *Conference on Computer Vision and Pattern Recognition (CVPR),
 > 2019* (**Oral**)<br/>
 > [Paper](https://arxiv.org/abs/1904.00699) |
-> [Homepage](https://pqhieu.github.io/research/cvpr19/)
+> [Homepage](https://pqhieu.github.io/research/cvpr19/) |
+> [Github](https://github.com/pqhieu/jsis3d)
 
-### Citation
-If you find our work useful for your research, please consider citing:
-
-    @inproceedings{pham-jsis3d-cvpr19,
-      title = {{JSIS3D}: Joint semantic-instance segmentation of 3d point clouds with multi-task pointwise networks and multi-value conditional random fields},
-      author = {Pham, Quang-Hieu and Nguyen, Duc Thanh and Hua, Binh-Son and Roig, Gemma and Yeung, Sai-Kit},
-      booktitle = {Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
-      year = {2019}
-    }
 
 ## Usage
 
@@ -62,14 +56,21 @@ To evaluate the results, run the following command:
 
 For more details, you can use the `--help` option for every scripts.
 
-> **Note**: The results on S3DIS in our paper are tested on Area 6 instead of Area 5.
-> To reproduce the results, please change the split in `train.txt` and `test.txt` accordingly.
-> Here I chose to keep the test set on Area 5 to make it easier to compare with other methods.
 
 ### Prepare your own dataset
-Check out the `scripts` folder to see how we prepare the dataset for training.
+1. Add your .ply files in './data/s3dis/raw_data' directory.
+2. process data with process_data.py in ./scripts. This will make numpy data with .ply files. <br>
+`python process_data.py --root data/s3dis`
+3. prepare .h5 files with prepare_h5.py in './scripts' This will make .h5 files in my_h5 folder. <br>
+`python prepare_h5.py --root data/s3dis`
+4. predict with the trained model and make the prediction file.
+`python my_pred.py --logdir logs/my_s3dis`
+5. visualize the results with main.py
+`python main.py`
 
-## License
-Our code is released under MIT license (see LICENSE for more details).
+### Experiments on the real data
+![colors](./_images/seg_colors.png)
+...updating
+        
 
-**Contact**: Quang-Hieu Pham (pqhieu1192@gmail.com)
+**Contact**: SeongJu Kang(djflstkddk@gmail.com)

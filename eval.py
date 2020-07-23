@@ -5,7 +5,7 @@ import argparse
 import numpy as np
 import plyfile as ply
 import scipy.stats as stats
-
+import pdb
 from utils import block_merge
 
 
@@ -45,6 +45,7 @@ for fname in flist:
     print('> Evaluating on {}...'.format(fname))
     fname = os.path.join(args['root'], 'h5', fname)
     fin = h5py.File(fname)
+    pdb.set_trace()
     coords = fin['coords'][:]
     points = fin['points'][:]
     labels = fin['labels'][:]

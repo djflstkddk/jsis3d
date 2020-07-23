@@ -8,6 +8,7 @@ import torch
 import torch.utils.data as data
 from tqdm import tqdm
 from sklearn.cluster import MeanShift
+import warnings
 
 from loaders import *
 from models import *
@@ -61,7 +62,10 @@ with torch.no_grad():
         batch_size = embedded.shape[0]
         for b in range(batch_size):
             k = size[b].item()
-            y = MeanShift(args['bandwidth'], n_jobs=8).fit_predict(embedded[b])
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                y = MeanShift(args['bandwidth'], n_jobs=8).fit_predict(embedded[b])
+
             instances.append(y)
         instances = np.stack(instances)
 
