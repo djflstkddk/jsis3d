@@ -2,3 +2,6 @@
 __pycache__/
 build/
 *.h5
+*.ply
+*.npy
+*.npz

@@ -5,6 +5,7 @@ import pdb
 import h5py
 import os
 import copy
+import matplotlib as mpl
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--root', default = '/home/dvision/PycharmProjects/jsis3d/', help='path to root directory')
@@ -38,7 +39,7 @@ for file_name in file_list:
     for i in range(13):
         seg_colors[_pdict[:,0]==i]=color_cate[i]
 
-    pdb.set_trace()
+    #pdb.set_trace()
     pcd = o3d.geometry.PointCloud()
     pcd.points = o3d.utility.Vector3dVector(points) # before elimination
     pcd.colors = o3d.utility.Vector3dVector(seg_colors) # segmentation visualization

@@ -60,7 +60,7 @@ with torch.no_grad():
         instances = []
         embedded = embedded.cpu().numpy()
         batch_size = embedded.shape[0]
-        pdb.set_trace()
+        #pdb.set_trace()
         for b in range(batch_size):
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore")
@@ -85,7 +85,7 @@ for fname in tqdm(flist, ascii=True):
     fin = h5py.File(fname)
     coords = fin['coords'][:]
     points = fin['points'][:]
-    pdb.set_trace()
+    #pdb.set_trace()
     batch_size = coords.shape[0]
     num_points = coords.shape[1]
 
@@ -100,7 +100,7 @@ for fname in tqdm(flist, ascii=True):
         fname = os.path.join(logdir, 'pred.npz')
         data = {'coords': coords, 'points': points, 'pred': pred}
         np.savez(fname, **data)
-        pdb.set_trace()
+        #pdb.set_trace()
         prog = './mvcrf {}'.format(fname)
         os.system(prog)
 
