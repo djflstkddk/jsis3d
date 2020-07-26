@@ -97,10 +97,10 @@ for fname in tqdm(flist, ascii=True):
         coords = coords.reshape(-1, 3)
         points = points.reshape(-1, 9)
 
-        fname = os.path.join(logdir, 'pred.npz')
+        fname = os.path.join(logdir, 'my_pred.npz')
         data = {'coords': coords, 'points': points, 'pred': pred}
         np.savez(fname, **data)
-        #pdb.set_trace()
+        pdb.set_trace()
         prog = './mvcrf {}'.format(fname)
         os.system(prog)
 
@@ -112,6 +112,6 @@ for fname in tqdm(flist, ascii=True):
     offset += batch_size
 
 pdict = {'semantics': pdict[:, :, 0], 'instances': pdict[:, :, 1]}
-fname = os.path.join(logdir, 'pred.npz')
+fname = os.path.join(logdir, 'my_pred.npz')
 print('> Saving predictions to {}...'.format(fname))
 np.savez(fname, **pdict)

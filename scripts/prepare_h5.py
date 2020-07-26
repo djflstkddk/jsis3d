@@ -36,10 +36,11 @@ def sample_cloud(cloud, num_samples):
 def room_to_blocks(fname, num_points, size=1.0, stride=0.5, threshold=100):
     cloud = np.load(fname)
     #cloud[:, 3:6] /= 255.0
-    #pdb.set_trace()
+    pdb.set_trace()
     limit_min = np.amin(cloud[:, 0:3], axis = 0)
     cloud[:, 0:3] = cloud[:, 0:3] - limit_min
-    limit = np.amax(cloud[:, 0:3], axis=0)
+    #limit = np.amax(cloud[:, 0:3], axis=0)  # limit should be the room size. If the point cloud is part of a room, type limit manually.
+
     width = int(np.ceil((limit[0] - size) / stride)) + 1
     depth = int(np.ceil((limit[1] - size) / stride)) + 1
     cells = [(x * stride, y * stride) for x in range(width) for y in range(depth)]
@@ -53,6 +54,7 @@ def room_to_blocks(fname, num_points, size=1.0, stride=0.5, threshold=100):
         block = cloud[cond, :]
         block = sample_cloud(block, num_points)
         blocks.append(block)
+    pdb.set_trace()
     blocks = np.stack(blocks, axis=0)
     # A batch should have shape of BxNx14, where
     # [0:3] - global coordinates
