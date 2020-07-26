@@ -8,15 +8,15 @@ import copy
 import matplotlib as mpl
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--root', default = '/home/dvision/PycharmProjects/jsis3d/', help='path to root directory')
+parser.add_argument('--root', default = './', help='path to root directory')
 args = parser.parse_args()
 #batch_size = 72 # batch_size depends on how many windows a scene(.ply file) has when making .h5 files
 num_points = 4096
 root = args.root
-file_list = os.path.join(root, 'data', 's3dis', 'metadata', 'test.txt')
+file_list = os.path.join(root, 'data', 's3dis', 'metadata', 'my_test.txt')
 flist = [line.strip() for line in open(file_list)]
 
-pdict = np.load(os.path.join(root, 'logs', 's3dis', 'pred.npz'))
+pdict = np.load(os.path.join(root, 'logs', 's3dis', 'my_pred.npz'))
 pdict = np.stack([pdict['semantics'], pdict['instances']], axis=-1)
 
 offset = 0
@@ -27,16 +27,16 @@ color_cate = [[x/255 for x in color] for color in color_cate]
 
 for file_name in flist:
     print("file name : {}".format(file_name))
-    data = h5py.File(os.path.join(root, 'data', 's3dis', 'h5', file_name))
+    data = h5py.File(os.path.join(root, 'data', 's3dis', 'my_h5', file_name))
     points = data['coords'][:]
     colors = data['points'][:, :, 3:6]
-    labels = data['labels'][:]
+    #labels = data['labels'][:]
     batch_size = points.shape[0]
     _pdict = pdict[offset:offset+batch_size]
-    pdb.set_trace()
+    #pdb.set_trace()
     points = points.reshape(-1, 3)
     colors = colors.reshape(-1, 3)
-    labels = labels.reshape(-1, 2)
+    #labels = labels.reshape(-1, 2)
     _pdict = _pdict.reshape(-1, 2)
     pdb.set_trace()
 
@@ -44,8 +44,8 @@ for file_name in flist:
     for i in range(13):
         print("class : {}, number : {}".format(classes[i], sum(_pdict[:,0]==i)))
     print()
-    for i in range(13):
-        print("class : {}, number : {}".format(classes[i], sum(labels[:,0]==i)))
+    #for i in range(13):
+    #    print("class : {}, number : {}".format(classes[i], sum(labels[:,0]==i)))
     """
     for i in range(13):
         indices = (truth[:, 0] == i)

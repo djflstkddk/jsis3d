@@ -81,6 +81,7 @@ flist = [line.strip() for line in open(fname)]
 
 offset = 0
 for fname in tqdm(flist, ascii=True):
+    #pdb.set_trace()
     fname = os.path.join(args['root'], 'my_h5', fname)
     fin = h5py.File(fname)
     coords = fin['coords'][:]
@@ -100,7 +101,7 @@ for fname in tqdm(flist, ascii=True):
         fname = os.path.join(logdir, 'my_pred.npz')
         data = {'coords': coords, 'points': points, 'pred': pred}
         np.savez(fname, **data)
-        pdb.set_trace()
+        #pdb.set_trace()
         prog = './mvcrf {}'.format(fname)
         os.system(prog)
 
@@ -111,6 +112,7 @@ for fname in tqdm(flist, ascii=True):
     pdict[offset:offset + batch_size] = pred
     offset += batch_size
 
+pdb.set_trace()
 pdict = {'semantics': pdict[:, :, 0], 'instances': pdict[:, :, 1]}
 fname = os.path.join(logdir, 'my_pred.npz')
 print('> Saving predictions to {}...'.format(fname))
