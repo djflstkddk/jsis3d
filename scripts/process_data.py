@@ -7,19 +7,19 @@ import open3d as o3d
 import pdb
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--root', help='path to root directory')
+parser.add_argument('--root', default = '../data/s3dis', help='path to root directory')
 args = parser.parse_args()
 
 root = args.root
 file_list = os.listdir(os.path.join(root, 'raw_data'))
 my_data = open(os.path.join(root, 'metadata', 'my_data.txt'), 'w')
 my_test = open(os.path.join(root, 'metadata', 'my_test.txt'), 'w')
+pdb.set_trace()
 
 for file_name in file_list:
-    fname = os.path.join(root, 'raw_data', file_name)
+    fname = os.path.join(root, 'raw_data', file_name, file_name + '.ply')
     pcd = o3d.io.read_point_cloud(fname)
 
-    pdb.set_trace()
     points = np.asarray(pcd.points)
     colors = np.asarray(pcd.colors)
     added = np.concatenate((points, colors), axis=1)
