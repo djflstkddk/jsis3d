@@ -41,11 +41,11 @@ def room_to_blocks(fname, num_points, size=1.0, stride=0.5, threshold=100):
     coords = np.transpose(cloud[:, :3])
     coords = np.transpose(np.matmul(trans, coords))
 
-    limit_min = np.asarray([-4, -3, -1.2])
+    limit_min = np.asarray([-3.8, -3.14, -1.2])
     coords = coords - limit_min
     cloud[:, 0:3] = coords
 
-    limit = np.asarray([5.3, 6.5, 2.5])  # limit should be the room size. If the point cloud is part of a room, type limit manually.
+    limit = np.asarray([5.55, 7.75, 2.5])  # limit should be the room size. If the point cloud is part of a room, type limit manually.
 
     width = int(np.ceil((limit[0] - size) / stride)) + 1
     depth = int(np.ceil((limit[1] - size) / stride)) + 1

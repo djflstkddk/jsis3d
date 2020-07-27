@@ -69,7 +69,9 @@ For more details, you can use the `--help` option for every scripts.
 `python main.py`
 
 ### Experiments on the real data
-![colors](./_images/seg_colors.png)
+
+![cup1](./_images/cup1.png)
+
 ...updating
         
 

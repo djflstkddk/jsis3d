@@ -71,7 +71,8 @@ for file_name in flist:
 
     pcd.colors = o3d.utility.Vector3dVector(colors) # original colors
     o3d.visualization.draw_geometries([pcd])
-    idx = np.logical_and(_pdict[:, 0] != 1, _pdict[:, 0] != 10) # omit floor and bookcase points
+    #idx = np.logical_and(_pdict[:, 0] != 1, _pdict[:, 0] != 10) # omit floor and bookcase points
+    idx = _pdict[:, 0]==12 # take only 'clutter' category.
     print("bef :{} , after:{}".format( idx.shape[0], sum(idx)))
     points = points[idx]
     colors = colors[idx]
