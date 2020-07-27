@@ -64,9 +64,9 @@ For more details, you can use the `--help` option for every scripts.
 `python process_data.py --root data/s3dis`
 3. prepare .h5 files with prepare_h5.py in './scripts' This will make .h5 files in my_h5 folder. <br>
 `python prepare_h5.py --root data/s3dis`
-4. predict with the trained model and make the prediction file. This will make my_pred.npz file in my_s3dis.
+4. predict with the trained model and make the prediction file. This will make my_pred.npz file in my_s3dis.<br>
 `python my_pred.py --logdir logs/my_s3dis`
-5. visualize the results with main.py
+5. visualize the results with main.py<br>
 `python main.py`
 
 ### Experiments on the real data
