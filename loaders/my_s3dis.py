@@ -16,8 +16,8 @@ class MYS3DIS(data.Dataset):
         self.points = []
         print('> Loading h5 files...')
         for fname in tqdm(self.rooms, ascii=True):
-            #pdb.set_trace()
             fin = h5py.File(os.path.join(self.root, 'my_h5', fname))
+            #pdb.set_trace()
             self.coords.append(fin['coords'][:])
             self.points.append(fin['points'][:])
             fin.close()
