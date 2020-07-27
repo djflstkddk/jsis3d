@@ -10,7 +10,6 @@ import matplotlib as mpl
 parser = argparse.ArgumentParser()
 parser.add_argument('--root', default = './', help='path to root directory')
 args = parser.parse_args()
-#batch_size = 72 # batch_size depends on how many windows a scene(.ply file) has when making .h5 files
 num_points = 4096
 root = args.root
 file_list = os.path.join(root, 'data', 's3dis', 'metadata', 'my_test.txt')
@@ -38,7 +37,7 @@ for file_name in flist:
     colors = colors.reshape(-1, 3)
     #labels = labels.reshape(-1, 2)
     _pdict = _pdict.reshape(-1, 2)
-    pdb.set_trace()
+    #pdb.set_trace()
 
     print("file_name : {}, batch_size : {}".format(file_name, batch_size))
     for i in range(13):
@@ -55,7 +54,7 @@ for file_name in flist:
         inter[i] += np.sum((pred[:, 0] == i) & (truth[:, 0] == i))
         union[i] += np.sum((pred[:, 0] == i) | (truth[:, 0] == i))
     """
-    pdb.set_trace()
+    #pdb.set_trace()
 
 
     seg_colors = copy.deepcopy(colors)

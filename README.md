@@ -58,19 +58,41 @@ For more details, you can use the `--help` option for every scripts.
 
 
 ### Prepare your own dataset
-1. Add your .ply files in './data/s3dis/raw_data' directory.
+1. Add your point cloud data in './data/s3dis/raw_data' directory. The folder and .ply file in it should have the same name.
+![data_add](./_images/data_add.png)
 2. process data with process_data.py in ./scripts. This will make numpy data with .ply files. <br>
 `python process_data.py --root data/s3dis`
 3. prepare .h5 files with prepare_h5.py in './scripts' This will make .h5 files in my_h5 folder. <br>
 `python prepare_h5.py --root data/s3dis`
-4. predict with the trained model and make the prediction file.
+4. predict with the trained model and make the prediction file. This will make my_pred.npz file in my_s3dis.
 `python my_pred.py --logdir logs/my_s3dis`
 5. visualize the results with main.py
 `python main.py`
 
 ### Experiments on the real data
 
+#### JSIS3D
+There are 13 segmentation categories.
+ > ['ceiling', 'floor', 'wall', 'beam', 'column', 'window', 'door', 'table', 'chair', 'sofa', 'bookcase', 'board', 'clutter']
+
+* If there is not matching object in the list, just 'clutter' category would be selected. <br>
+* If there is a matching object(ex. chair), we will select it + 'clutter' category too.
+
 ![cup1](./_images/cup1.png)
+The cups are segmented as 'bookcase' together. It needs a more detailed algorithm to segment cups out. 
+
+![bottle1](./_images/bottle1.png)
+All the points are segmented as 'clutter'. Sofa is not segmented. It might be because that number of points is small.
+
+![bottle2](./_images/bottle2.png)
+ Wall is segmented out right. However, some part is wrongly segmented as 'bookcase'.
+ 
+ 
+ In overall, the category is too small to use & the real data is too noisy.<br>
+ For example, to detect walls, the surface should be flat. In our data, surface is so bumpy which is quite different from 
+S3DIS trained for this model. It is not robust enough to apply directly on noisy, incomplete data. 
+ 
+ #### PointGroup
 
 ...updating
         

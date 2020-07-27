@@ -112,7 +112,7 @@ for fname in tqdm(flist, ascii=True):
     pdict[offset:offset + batch_size] = pred
     offset += batch_size
 
-pdb.set_trace()
+#pdb.set_trace()
 pdict = {'semantics': pdict[:, :, 0], 'instances': pdict[:, :, 1]}
 fname = os.path.join(logdir, 'my_pred.npz')
 print('> Saving predictions to {}...'.format(fname))
